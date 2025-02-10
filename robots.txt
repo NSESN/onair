@@ -4,5 +4,5 @@ Disallow: /onair/
 User-agent: *
 Allow: /
 
-
+disallow: /sitemap_new.xml
 Sitemap: https://nsesn.github.io/sitemap.xml
