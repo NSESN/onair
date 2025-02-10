@@ -3,4 +3,4 @@ Disallow: /NSESN/onair/
 
 User-agent: *
 Allow: /sitemap.xml
-Sitemap: https://nsesn.github.io/sitemap.xml
+Sitemap: https://github.com/sitemap.xml
