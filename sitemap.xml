@@ -3,17 +3,17 @@
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 <url>
   <loc>https://nsesn.github.io/onair/</loc>
-  <lastmod>2025-02-10T03:27:28+00:00</lastmod>
+  <lastmod>2025-02-10</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://nsesn.github.io/onair/index.html</loc>
-  <lastmod>2025-02-10T03:27:28+00:00</lastmod>
+  <lastmod>2025-02-10</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://nsesn.github.io/onair/about.html</loc>
-  <lastmod>2025-02-10T03:27:28+00:00</lastmod>
+  <lastmod>2025-02-10</lastmod>
   <priority>0.80</priority>
 </url>
 </urlset>
