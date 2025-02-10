@@ -8,16 +8,10 @@
 
 
 <url>
-  <loc>https://nsesn.github.io/onair/</loc>
-  <lastmod>2025-02-10T05:05:17+00:00</lastmod>
-  <changefreq>always</changefreq>
-  <priority>1.00</priority>
-</url>
-<url>
   <loc>https://nsesn.github.io/onair/index.html</loc>
   <lastmod>2025-02-10T05:05:17+00:00</lastmod>
   <changefreq>always</changefreq>
-  <priority>0.80</priority>
+  <priority>1.00</priority>
 </url>
 <url>
   <loc>https://nsesn.github.io/onair/about.html</loc>
