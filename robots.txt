@@ -1,8 +1,8 @@
 User-agent: Googlebot
-Disallow: /onair/
+Disallow: /
 
 User-agent: *
-Allow: /
+Allow: /onair/
 
 Disallow: /sitemap_new.xml
 Sitemap: https://nsesn.github.io/sitemap.xml
