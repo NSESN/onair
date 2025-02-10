@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+    <nav>
+        <div class="menu">
+              
+                <a href="index.html">Home</a>
+                <a href="about.html">about</a>
+                <a href="#">cyclone</a>
+                <a href="#">all in one</a>
+                <a href="#">websites</a>
+                <a href="https://www.youtube.com/@CycloneMan">YouTube</a>
+            
+        </div> 
+    </nav>
+
+    <div class="logo">
+        <a href="index.html">nSESn</a>
+    </div>
+    <div id="side1">
+        <span class="date1">
+            <span id="dayname">Day</span>,<span id="daynum">00</span>
+            <span id="month">Month</span>
+            <span id="year">Year</span>
+          </span>
+    </div>
+   
+  <div id="side2">
+    <span class="time">
+    <span id="hour">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+  </span>
+</div>
+<br>
+<br>
+<div class="leftsidemenu">
+    <div class="submenu">
+        <a href="index.html">Home</a>     
+        
+          <a href="#">cyclone</a>
+        <a href="#">OOP</a>
+        <a href="about.html">about</a>
+        <a href="#">websites</a>
+        <a href="https://www.youtube.com/@CycloneMan">YouTube</a>
+    </div>
+</div> 
+<div class="slider">
+   <div class="slides"> 
+    <img src="mrr pic 3.jpg" alt="Image 1">
+    <img src="mrr pic 2.jpg" alt="Image 2"> 
+    <img src="png-transparent-callout-speech-balloon-others-cdr-angle-rectangle.png" alt="Image 3"></a> 
+    <img src="20210606_133757.jpg" alt="Image 4"></a> 
+  </div> 
+  <div class="navigation"> <button id="prev">&#10094;</button> <button id="next">&#10095;</button> </div>
+</div>
+
+<div class="content">
+   <h1>top view</h1> 
+   <div class="row"> 
+    <div class="column" style="background-color:#aaa;">
+       <h2>Column 1</h2> 
+       <p>Kerala, often referred to as "God's Own Country," is a treasure trove of natural beauty, cultural heritage, and unique experiences. Nestled along the southwestern coast of India, this enchanting state is blessed with lush green landscapes, tranquil backwaters, and pristine beaches.</p> 
+      </div> 
+      <div class="column" style="background-color:#bbb;"> 
+        <h2>Column 2</h2> 
+        <p>The rolling hills of the Western Ghats, adorned with tea and spice plantations, offer a serene escape into nature's lap. Kerala's vibrant culture is a harmonious blend of traditional art forms, such as Kathakali and Mohiniyattam, and festivals like Onam and Vishu, which are celebrated with great fervor.</p> 
+      </div>
+       <div class="column" style="background-color:#ccc;">
+         <h2>Column 3</h2> 
+         <p>The state's cuisine is a delightful journey for the taste buds, with its rich and diverse flavors, from spicy fish curries to the sweet and savory banana chips. The Ayurvedic treatments and wellness centers provide rejuvenation for the body and soul, attracting visitors from around the world seeking holistic healing.</p> 
+        </div> 
+      </div>
+    </div>
+    
+<div class="footer"> <p>&copy; 2024 My Website. All rights reserved.</p> <p>Privacy Policy | Terms of Service</p> </div>
+<script >
+
+  const slides = document.querySelector('.slides'); 
+  const images = document.querySelectorAll('.slides img'); 
+  const prevBtn = document.getElementById('prev'); 
+  const nextBtn = document.getElementById('next');
+  
+  let currentIndex = 0; 
+  const intervalTime = 3000; // 3 seconds
+   let slideInterval; function showSlide(index) 
+   { 
+    if (index >= images.length)
+     { 
+      currentIndex = 0;
+     } 
+     else if (index < 0) 
+     { 
+      currentIndex = images.length - 1;
+     } 
+     else 
+     { 
+      currentIndex = index; 
+    } 
+    slides.style.transform = `translateX(${-currentIndex * 100}%)`; 
+  }
+   function nextSlide() 
+   { 
+    showSlide(currentIndex + 1); 
+  } 
+  function prevSlide()
+   { showSlide(currentIndex - 1);
+   } 
+   function startSlideShow() 
+   {
+     slideInterval = setInterval(nextSlide, intervalTime);
+     } 
+     function stopSlideShow()
+      { 
+        clearInterval(slideInterval);
+       }
+        nextBtn.addEventListener('click', () => { stopSlideShow(); nextSlide(); startSlideShow(); }); 
+        prevBtn.addEventListener('click', () => { stopSlideShow(); prevSlide(); startSlideShow(); });
+        slides.addEventListener('mouseenter', stopSlideShow); 
+        slides.addEventListener('mouseleave', startSlideShow); 
+  startSlideShow();
+  
+  
+  
+  
+
+
+       
+
+
+
+       
+        let dayname = document.getElementById("dayname");
+        let month = document.getElementById("month");
+        let daynum = document.getElementById("daynum");
+        let year = document.getElementById("year");
+
+    
+       let hour = document.getElementById("hour");
+       let minutes = document.getElementById("minutes");
+       let seconds = document.getElementById("seconds");
+       setInterval(()=>{
+       let currentTime = new Date();
+       
+       console.log(currentTime);
+
+       hour.innerHTML =currentTime.getHours();
+       minutes.innerHTML =currentTime.getMinutes();
+       seconds.innerHTML =currentTime.getSeconds();
+       const months =["January","February","March","April", "May", "June", "July", "August", "September", "October","November","December"];
+       const week= ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; 
+
+       dayname.innerHTML =week[currentTime.getDay()];
+       month.innerHTML =months[currentTime.getMonth()];
+       year.innerHTML =currentTime.getFullYear();
+       daynum.innerHTML =currentTime.getDate();
+       },1000)
+    </script>
+</body>
+</html>
