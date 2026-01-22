@@ -1,0 +1,362 @@
+SmartFusion2 use-case:
+Analog input → ADC → FPGA (Verilog) → Output (LED / digital)
+
+I’ll give you a simple step-by-step Libero SoC tutorial using:
+
+SmartFusion2 (because it has built-in ADC)
+
+Analog input → compare → LED ON/OFF
+
+
+This is exactly how mixed-signal SoC FPGA is used 🚀
+
+
+---
+
+🔹 What We Will Build (Simple Project)
+
+🎯 Goal
+
+Give analog voltage (0–3.3V) to ADC pin
+
+ARM / MSS ADC converts to digital
+
+FPGA logic checks value
+
+If voltage > threshold → LED ON
+
+Else → LED OFF
+
+
+
+---
+
+🔹 Requirements
+
+Board: SmartFusion2 evaluation board (or similar)
+
+Tool: Libero SoC + SoftConsole
+
+Language:
+
+Verilog (for FPGA logic)
+
+C (small code to start ADC)
+
+
+
+
+---
+
+🟢 STEP 1 — Create New Project in Libero
+
+1. Open Libero SoC
+
+
+2. File → New Project
+
+
+3. Name: adc_led_demo
+
+
+4. Type: SoC FPGA Design
+
+
+5. Device: Example
+
+Family: SmartFusion2
+
+Die: M2S010 (or your board chip)
+
+
+
+6. Finish
+
+
+
+
+---
+
+🟢 STEP 2 — Configure MSS (ARM + ADC)
+
+This is very important.
+
+1. In Design Flow
+
+
+2. Double-click Configure MSS
+
+
+
+This opens the MSS configurator.
+
+
+---
+
+🔹 Enable ADC
+
+Inside MSS:
+
+Go to Peripherals → ADC
+
+Enable:
+
+✅ ADC
+
+Select channel (example: ADC0)
+
+
+Enable:
+
+Sample rate default OK
+
+
+
+
+---
+
+🔹 Enable GPIO (for LED)
+
+Go to Peripherals → GPIO
+
+Enable one GPIO pin (example: GPIO_0)
+
+Set as Output
+
+
+Click Generate and close MSS.
+
+
+---
+
+🟢 STEP 3 — Add Verilog Module (FPGA Logic)
+
+Now we write a small module that:
+
+Takes ADC digital value
+
+Compares with threshold
+
+Drives LED signal
+
+
+
+---
+
+🔹 Create Verilog file
+
+Right click → Create HDL → Verilog Module
+Name: adc_compare.v
+
+
+---
+
+🔹 Verilog Code (Simple Comparator)
+
+module adc_compare (
+    input  wire        clk,
+    input  wire [11:0] adc_data,   // 12-bit ADC output
+    output reg         led
+);
+
+parameter THRESHOLD = 12'd2000;   // about mid voltage
+
+always @(posedge clk) begin
+    if (adc_data > THRESHOLD)
+        led <= 1'b1;   // LED ON
+    else
+        led <= 1'b0;   // LED OFF
+end
+
+endmodule
+
+
+---
+
+🟢 STEP 4 — Connect ADC to FPGA Fabric
+
+In Libero:
+
+1. Open SmartDesign
+
+
+2. You will see:
+
+MSS block (ARM + ADC)
+
+
+
+
+
+---
+
+🔹 Do connections
+
+From MSS:
+
+Connect ADC output bus → adc_data input of your Verilog block
+
+
+Connect:
+
+Clock from MSS → clk
+
+
+Connect:
+
+led output → MSS GPIO pin
+
+
+
+This connects:
+
+Analog Pin → ADC (MSS) → Verilog → GPIO → LED
+
+
+---
+
+🟢 STEP 5 — Write Small C Code (Start ADC)
+
+Now ARM must start the ADC.
+
+Open SoftConsole (Microchip IDE).
+
+
+---
+
+🔹 Example C Code (Very simple)
+
+#include "drivers/mss_adc/mss_adc.h"
+#include "drivers/mss_gpio/mss_gpio.h"
+
+int main()
+{
+    MSS_GPIO_init();
+    MSS_GPIO_config(MSS_GPIO_0, MSS_GPIO_OUTPUT_MODE);
+
+    MSS_ADC_init();
+    MSS_ADC_enable();
+
+    while(1)
+    {
+        /* ADC runs continuously */
+        /* FPGA logic automatically reads adc_data */
+    }
+}
+
+(ADC hardware sends data continuously to fabric)
+
+Program this into SmartFusion2.
+
+
+---
+
+🟢 STEP 6 — Pin Assignment (Important)
+
+Open I/O Editor
+
+Assign:
+
+ADC input pin → Analog input pin on board
+
+GPIO_0 → LED pin
+
+
+Save constraints.
+
+
+---
+
+🟢 STEP 7 — Build Flow
+
+In Design Flow:
+
+1. Synthesize
+
+
+2. Place and Route
+
+
+3. Generate Bitstream
+
+
+
+
+---
+
+🟢 STEP 8 — Program Board
+
+1. Open FlashPro
+
+
+2. Load .job file
+
+
+3. Click Program
+
+
+
+
+---
+
+🟢 STEP 9 — Test (Output View 👀)
+
+Now:
+
+Apply analog voltage (potentiometer / signal generator)
+
+
+🔹 Behavior
+
+Analog Voltage	ADC Value	LED
+
+Low (<1.6V)	< 2000	OFF ❌
+High (>1.6V)	> 2000	ON ✅
+
+
+So when you rotate the pot:
+
+👉 LED turns ON / OFF depending on voltage
+
+This is your output view.
+
+
+---
+
+🔹 Block Diagram (Very Important Concept)
+
+Analog Input
+     │
+     ▼
++-----------+
+|   ADC     |  (inside SmartFusion2 MSS)
++-----------+
+     │ 12-bit digital
+     ▼
++----------------+
+| Verilog Logic  |  (compare > threshold)
++----------------+
+     │
+     ▼
++---------+
+|  GPIO   |
++---------+
+     │
+     ▼
+   LED ON/OFF
+
+
+---
+
+🔹 Why This Example Is VERY Valuable 🚀
+
+This shows:
+
+Mixed signal design
+
+ADC handling
+
+FPGA logic
+
+ARM + FPGA co-design
+
